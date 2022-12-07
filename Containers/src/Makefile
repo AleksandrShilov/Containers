@@ -112,25 +112,6 @@ check_leaks_queue:
 	$(LEAKS) ./test_queue
 
 
-# ******** Map ********
-
-gcov_report_map: test_map
-	./test_map
-	mkdir report
-	gcovr -r ../ -e ../googletest-1.10.x --html --html-details -o report/result.html
-	open report/result.html
-
-test_map: 
-	$(STD) test_map.cpp -o test_map -lgtest -lgmock -pthread --coverage 
-	./test_map
-	-cppcheck --language=c++ --enable=all --std=c++17 my_list.h $(CPP)
-	cp ../materials/linters/.clang-format .clang-format
-	clang-format -n *.cpp *.h
-
-check_leaks_map:
-	$(LEAKS) ./test_map
-
-
 
 clean:
 	rm -rf *.gcda *.gcno test_stack report test_vector test_list test_queue test_map test_all .clang-format
